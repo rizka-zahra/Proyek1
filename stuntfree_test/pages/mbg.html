@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MBG</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/mbg.css">
+</head>
+<body>
+
+<!-- === NAVBAR === -->
+<header id="header" class="site-header">
+  <div class="header-container">
+    <a href="#">
+      <img src="../images/72a64e73f80ea1e29cc8ba041408383162cdcf4a.png" alt="StuntFree Logo" class="header-logo">
+    </a>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="#">HOME</a></li>
+        <li><a href="#articles">ARTIKEL</a></li>
+
+        <li class="dropdown">
+          <a href="#" class="dropbtn" id="menuBtn">
+            MENU
+            <svg class="arrow-icon" id="arrowIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </a>
+          <div class="dropdown-content" id="menuDropdown">
+            <a href="mpasi.html">MPASI</a>
+            <a href="mbg.html">MBG</a>
+          </div>
+        </li>
+
+        <li><a href="#">KALKULATOR</a></li>
+        <li><a href="#">KONSULTASI</a></li>
+      </ul>
+    </nav>
+    <a href="#" class="profile-icon-link">
+      <img src="../images/327_308.svg" alt="Profile" class="profile-icon">
+    </a>
+  </div>
+</header>
+
+<!-- === CONTENT === -->
+<main>
+  <section class="recipes-section">
+    <div class="title-banner">
+      <div class="banner-center">
+        <h1 class="banner-title">Makanan Bergizi</h1>
+        <img src="../images/mbgicon.png" alt="MBG Icon" class="deco-img">
+      </div>
+    </div>
+
+    <div class="recipes-grid-container">
+      <div class="recipes-grid">
+        <article class="recipe-card"><img src="../images/cardmbg.png" alt="MPASI 1" class="preview-img"></article>
+        <article class="recipe-card"><img src="../images/cardmbg.png" alt="MPASI 2" class="preview-img"></article>
+        <article class="recipe-card"><img src="../images/cardmbg.png" alt="MPASI 3" class="preview-img"></article>
+        <article class="recipe-card"><img src="../images/cardmbg.png" alt="MPASI 4" class="preview-img"></article>
+        <article class="recipe-card"><img src="../images/cardmbg.png" alt="MPASI 5" class="preview-img"></article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- === IMAGE POPUP MODAL === -->
+<div id="imageModal" class="image-modal">
+  <span class="close-modal">&times;</span>
+  <img class="modal-content" id="modalImage">
+</div>
+
+<!-- === JAVASCRIPT === -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const menuBtn = document.getElementById("menuBtn");
+    const dropdown = document.getElementById("menuDropdown");
+    const arrow = document.getElementById("arrowIcon");
+
+    menuBtn.addEventListener("click", function(e) {
+      e.preventDefault();
+      dropdown.classList.toggle("show");
+      arrow.classList.toggle("rotate");
+    });
+
+    window.addEventListener("click", function(e) {
+      if (!e.target.closest(".dropdown")) {
+        dropdown.classList.remove("show");
+        arrow.classList.remove("rotate");
+      }
+    });
+  });
+
+  const modal = document.getElementById("imageModal");
+  const modalImg = document.getElementById("modalImage");
+  const closeBtn = document.querySelector(".close-modal");
+
+  document.querySelectorAll(".preview-img").forEach(img => {
+    img.addEventListener("click", () => {
+      modal.style.display = "flex";
+      modalImg.src = img.src;
+    });
+  });
+
+  closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  window.addEventListener("click", (e) => {
+    if (e.target === modal) modal.style.display = "none";
+  });
+</script>
+
+</body>
+</html>

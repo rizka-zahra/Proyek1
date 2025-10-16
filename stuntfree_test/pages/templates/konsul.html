@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Konsultasi Gizi dengan AI</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="stylesheet" href="../static/konsul.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Rubik:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="chat-container">
+    <div class="header">
+      <div class="header-left">
+        <a href="../home.html" class="back-button">
+          <i class="fas fa-arrow-left"></i>
+        </a>
+        <h1>STUNTFREE</h1>
+      </div>
+      <div class="header-right">
+        <img id="history-icon"  src="../static/clock.png" alt="History" class="history-icon">
+      </div>
+    </div>
+
+    <div id="chat-box"></div>
+
+    <form id="input-form">
+      <input type="text" id="message-input" placeholder="Tulis pesan..." autocomplete="off">
+      <button type="submit" id="send-button">Kirim</button>
+    </form>
+  </div>
+
+  <div id="history-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3>Riwayat Chat</h3>
+      <div style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <label for="history-date">Pilih Tanggal:</label>
+          <input type="date" id="history-date">
+          <button onclick="filterHistory()">Filter</button>
+        </div>
+        <button id="clear-history-btn" style="background-color: #dc3545; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">Hapus Riwayat</button>
+      </div>
+      <div id="history-content"></div>
+    </div>
+  </div>
+
+  <script>
+    const chatBox = document.getElementById('chat-box');
+    const inputForm = document.getElementById('input-form');
+    const messageInput = document.getElementById('message-input');
+    const historyIcon = document.getElementById('history-icon');
+    const historyModal = document.getElementById('history-modal');
+    const closeModal = document.querySelector('.close');
+    const historyContent = document.getElementById('history-content');
+    const historyDateInput = document.getElementById('history-date');
+    const clearHistoryBtn = document.getElementById('clear-history-btn');
+
+    // Tambah pesan ke chat utama
+    function addMessageToChatBox(sender, content) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message', sender);
+        if (sender === 'ai') {
+            messageDiv.innerHTML = marked.parse(content);
+        } else {
+            messageDiv.textContent = content;
+        }
+        chatBox.appendChild(messageDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // Fungsi untuk memfilter riwayat berdasarkan tanggal
+    function filterHistory() {
+        const selectedDate = historyDateInput.value;
+        if (!selectedDate) {
+            historyContent.innerHTML = '<p style="color:red;">Silakan pilih tanggal terlebih dahulu.</p>';
+            return;
+        }
+        loadHistory(selectedDate);
+    }
+
+    // Fungsi untuk memuat riwayat chat
+    async function loadHistory(date = null) {
+        let url = '/api/history_grouped';
+        if (date) {
+            url += `?date=${date}`;
+        }
+        
+        historyContent.innerHTML = 'Memuat...';
+
+        try {
+            const res = await fetch(url);
+            if (!res.ok) {
+                throw new Error(`Server responded with status: ${res.status}`);
+            }
+            const data = await res.json();
+            
+            historyContent.innerHTML = '';
+            
+            for (const dateKey in data) {
+                // Header tanggal
+                const dateHeader = document.createElement('div');
+                dateHeader.className = 'date-header';
+                dateHeader.textContent = dateKey;
+                historyContent.appendChild(dateHeader);
+
+                // Isi pesan
+                data[dateKey].forEach(msg => {
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = `history-message ${msg.sender}`;
+                    
+                    let formattedContent = (msg.sender === 'ai') ? marked.parse(msg.content) : msg.content;
+                    messageDiv.innerHTML = `
+                        <div><strong>${msg.sender === 'user' ? 'User' : 'AI'}:</strong> ${formattedContent}</div>
+                        <small>${new Date(msg.timestamp).toLocaleString()}</small>
+                    `;
+                    historyContent.appendChild(messageDiv);
+                });
+            }
+            
+            if (Object.keys(data).length === 0) {
+                historyContent.innerHTML = '<p>Tidak ada riwayat chat pada tanggal ini.</p>';
+            }
+        } catch (err) {
+            console.error("Error loading history:", err);
+            historyContent.innerHTML = `<p style="color:red;">⚠️ Gagal memuat riwayat: ${err.message}</p>`;
+        }
+    }
+
+    // Kirim pesan ke backend
+    inputForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const message = messageInput.value.trim();
+        if (!message) return;
+
+        addMessageToChatBox('user', message);
+        messageInput.value = '';
+
+        try {
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: message })
+            });
+
+            if (!response.ok) throw new Error("Gagal kirim pesan");
+
+            const data = await response.json();
+            addMessageToChatBox('ai', data.ai_response);
+        } catch (err) {
+            addMessageToChatBox('ai', `⚠️ Error: ${err.message}`);
+        }
+    });
+
+    // Event buka modal
+    historyIcon.addEventListener('click', () => {
+        historyModal.style.display = 'block';
+        loadHistory(); // langsung load semua riwayat
+    });
+
+    // Event tutup modal
+    closeModal.addEventListener('click', () => {
+        historyModal.style.display = 'none';
+    });
+    window.addEventListener('click', (event) => {
+        if (event.target == historyModal) {
+            historyModal.style.display = 'none';
+        }
+    });
+
+    // Event hapus riwayat
+    clearHistoryBtn.addEventListener('click', async () => {
+        const selectedDate = historyDateInput.value;
+        let message = "Apakah Anda yakin ingin menghapus semua riwayat chat?";
+        let url = '/api/clear_history';
+
+        if (selectedDate) {
+            message = `Apakah Anda yakin ingin menghapus riwayat chat pada tanggal ${selectedDate}?`;
+            url += `?date=${selectedDate}`;
+        }
+
+        const confirmDelete = confirm(message);
+        if (confirmDelete) {
+            try {
+                const response = await fetch(url, { method: 'POST' });
+                const data = await response.json();
+                alert(data.message);
+                historyContent.innerHTML = '<p>Riwayat chat kosong.</p>';
+                if (!selectedDate) {
+                    historyDateInput.value = '';
+                }
+            } catch (error) {
+                console.error('Gagal menghapus riwayat:', error);
+                alert('Gagal menghapus riwayat. Silakan coba lagi.');
+            }
+        }
+    });
+  </script>
+</body>
+</html>

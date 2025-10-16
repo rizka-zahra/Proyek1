@@ -1,0 +1,234 @@
+/* General modern reset and typography */
+:root {
+    --color-primary: #ff8383;
+    --color-background: #ffffff;
+    --color-footer-bg: #cccccc;
+    --color-text-dark: #000000;
+    --color-text-light: #ffffff;
+    --color-text-placeholder: #cdcccc;
+    --color-bot-message-bg: #f3d1d1;
+    --color-user-message-bg: #d1e7ff;
+    --font-primary: 'Rubik', sans-serif;
+    --font-logo: 'Inter', sans-serif;
+}
+
+html, body {
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-primary);
+    /* Modifikasi untuk background PNG */
+    background-image: url('/flower-trail.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: var(--color-text-dark);
+}
+
+body {
+    display: block; 
+    overflow: hidden; /* Mencegah scroll pada body */
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* --- Chat Container --- */
+.chat-container {
+    width: 100vw;
+    max-width: none;
+    height: 100vh;
+    /* Menghapus background-color agar background body terlihat */
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* --- Header --- */
+.header {
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: var(--font-logo);
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+/* Tampilan Header Baru */
+.header-left, .header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Jarak antara ikon dan teks */
+}
+
+/* Tombol Kembali */
+.back-button {
+    color: var(--color-text-light);
+    text-decoration: none;
+    font-size: 28px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.back-button:hover {
+    transform: scale(1.1);
+}
+
+/* Ikon Jam Baru */
+.history-icon {
+    width: 32px; /* Sesuaikan ukuran sesuai kebutuhan */
+    height: 32px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.history-icon:hover {
+    transform: scale(1.1);
+}
+
+/* --- Chat Box --- */
+#chat-box {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    /* Menghapus background agar background body terlihat */
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.message {
+    padding: 12px 18px;
+    border-radius: 8px;
+    max-width: 75%;
+    line-height: 1.5;
+}
+
+.user {
+    background-color: var(--color-user-message-bg);
+    align-self: flex-end;
+    margin-left: auto;
+}
+
+.ai {
+    background-color: var(--color-bot-message-bg);
+    align-self: flex-start;
+    margin-right: auto;
+}
+
+/* --- Input Form --- */
+#input-form {
+    display: flex;
+    padding: 15px 20px;
+    background-color: var(--color-footer-bg);
+    align-items: center;
+    gap: 10px;
+}
+
+#message-input {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+}
+
+#send-button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+#send-button:hover {
+    background-color: #e56d6d;
+}
+
+/* --- Modal Styles --- */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0; 
+    top: 0;
+    width: 100%; 
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.close {
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    color: #aaa;
+    cursor: pointer;
+}
+
+.close:hover, .close:focus {
+    color: #333;
+}
+
+/* --- Riwayat Chat --- */
+.date-header {
+    font-weight: bold;
+    margin-top: 20px;
+    font-size: 16px;
+    color: #333;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+}
+
+.history-message {
+    margin: 15px 0;
+    padding: 15px;
+    border-radius: 8px;
+    line-height: 1.5;
+}
+
+.history-message.user {
+    background-color: #d1e7ff; /* biru muda */
+    text-align: left;
+}
+
+.history-message.ai {
+    background-color: #f3d1d1; /* merah muda */
+    text-align: left;
+}
+
+.history-message small {
+    display: block;
+    margin-top: 8px;
+    font-size: 12px;
+    color: #555;
+}
