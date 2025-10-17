@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artikel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/artikel.css">
+</head>
+<body>
+
+<header id="header" class="site-header">
+  <div class="header-container">
+    <a href="home.html">
+      <img src="../images/72a64e73f80ea1e29cc8ba041408383162cdcf4a.png" alt="StuntFree Logo" class="header-logo">
+    </a>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="home.html">HOME</a></li>
+        <li><a href="artikel.html">ARTIKEL</a></li>
+
+        <!-- ✅ Dropdown Menu (klik + arrow berputar) -->
+        <li class="dropdown">
+          <a href="#" class="dropbtn" id="menuBtn">
+            MENU
+            <svg class="arrow-icon" id="arrowIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </a>
+          <div class="dropdown-content" id="menuDropdown">
+            <a href="mpasi.html">MPASI</a>
+            <a href="mbg.html">MBG</a>
+          </div>
+        </li>
+
+        <li><a href="kalkulator.html">KALKULATOR</a></li>
+        <li><a href="../pages/templates/konsul.html">KONSULTASI</a></li>
+      </ul>
+    </nav>
+    <a href="profile.html" class="profile-icon-link">
+      <img src="../images/327_308.svg" alt="Profile" class="profile-icon">
+    </a>
+  </div>
+</header>
+
+<section id="articles" class="articles-section">
+  <div class="page-wrapper">
+    <!-- Baris Pertama - 3 Card -->
+    <div class="articles-grid">
+      <article class="article-card">
+        <div class="card-image-container">
+          <img src="../images/e1abc88c55b824808e861052e69040eb06b17945.png" alt="Artikel 1" class="card-image">
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Stunting di Indonesia: Penyebab, Dampak, dan Upaya Pencegahan</h3>
+          <p class="card-excerpt">Tahukah Anda bahwa 1 dari 5 anak Indonesia masih mengalami stunting? Meski prevalensinya turun dari 24,4% (2021) menjadi 21,6% (2022), target 14% di 2024</p>
+          <a href="artikel1.html" class="read-more-btn">Baca Selengkapnya..</a>
+        </div>
+      </article>
+      
+      <article class="article-card">
+        <div class="card-image-container">
+          <img src="../images/4d5c9f6916175fc6cbe1ab16b2ecd0e4f6672b12.png" alt="Artikel 2" class="card-image">
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Stunting itu Penting dan Genting</h3>
+          <p class="card-excerpt">Stunting di Indonesia merupakan isu kritis yang membutuhkan pendekatan multi-sektoral dan menjadi permasalahan kekurangan gizi utama balita Indonesia saat ini.</p>
+          <a href="#" class="read-more-btn">Baca Selengkapnya..</a>
+        </div>
+      </article>
+      
+      <article class="article-card">
+        <div class="card-image-container">
+          <img src="../images/fdc168ce3ed1eded3212ffa9d30d1b8e183bc133.png" alt="Artikel 3" class="card-image">
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Ketahui Masalah Stunting dan Cara Mengatasi Stunting</h3>
+          <p class="card-excerpt">Tahukah Anda bahwa 1 dari 5 anak Indonesia masih mengalami stunting? Meski prevalensinya turun dari 24,4% (2021) menjadi 21,6% (2022), target 14% di 2024</p>
+          <a href="#" class="read-more-btn">Baca Selengkapnya..</a>
+        </div>
+      </article>
+    </div>
+    
+    <!-- Baris Kedua - 2 Card (Centered) -->
+    <div class="articles-grid articles-grid-centered">
+      <article class="article-card">
+        <div class="card-image-container">
+          <img src="../images/artikel4.png" alt="Artikel 4" class="card-image">
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Gizi Seimbang Anak, Fondasi Menuju Generasi Emas 2045</h3>
+          <p class="card-excerpt">Saat ini, Indonesia dihadapkan pada tiga tantangan utama dalam bidang gizi, yaitu kekurangan gizi (seperti stunting dan wasting), kelebihan gizi, serta kekurangan zat gizi mikro. Di tengah globale, WHO</p>
+          <a href="#" class="read-more-btn">Baca Selengkapnya..</a>
+        </div>
+      </article>
+      
+      <article class="article-card">
+        <div class="card-image-container">
+          <img src="../images/artikel5.png" alt="Artikel 5" class="card-image">
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Tingginya Masalah Kekurangan Gizi Anak Indonesia</h3>
+          <p class="card-excerpt">Di tengah naiknya angka kelebihan gizi, permasalahan kekurangan gizi pada anak di Indonesia masih banyak, diantaranya stunting, wasting dan underweight. Data Survey Status Gizi</p>
+          <a href="#" class="read-more-btn">Baca Selengkapnya..</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ✅ JavaScript dropdown klik -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const menuBtn = document.getElementById("menuBtn");
+    const dropdown = document.getElementById("menuDropdown");
+    const arrow = document.getElementById("arrowIcon");
+
+    menuBtn.addEventListener("click", function(e) {
+      e.preventDefault();
+      dropdown.classList.toggle("show");
+      arrow.classList.toggle("rotate");
+    });
+
+    window.addEventListener("click", function(e) {
+      if (!e.target.closest(".dropdown")) {
+        dropdown.classList.remove("show");
+        arrow.classList.remove("rotate");
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

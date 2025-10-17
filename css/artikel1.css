@@ -1,0 +1,264 @@
+:root {
+  --primary-text: #030303;
+  --secondary-text: #090909;
+  --light-text: #ffffff;
+  --background-light: #ffffff;
+  --background-gradient: linear-gradient(90deg, #ff8383 0%, #f5e7e7 100%);
+  --accent-blue: #d1e7ff;
+  --dark-bg: #0f0f0f;
+  --border-dark: #000000;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--background-light);
+  color: var(--primary-text);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+h1, h2, h3, p {
+  margin: 0;
+}
+
+/* === HEADER === */
+.site-header {
+  background: var(--background-gradient);
+  box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.3);
+  padding: 30px 0;
+  border-bottom: 1px solid var(--border-dark);
+  position: relative;
+  z-index: 10;
+}
+
+.header-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-height: 80px;
+}
+
+.header-logo {
+  width: 250px;
+  max-height: 200px;
+  height: auto;
+  object-fit: contain;
+}
+
+.main-nav ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 45px;
+}
+
+.main-nav a {
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: 3.2px;
+  color: var(--primary-text);
+  text-shadow: 0px 10px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* === DROPDOWN MENU (klik + arrow rotate, tanpa ubah size arrow) === */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: 3.2px;
+  color: var(--primary-text);
+  text-shadow: 0px 10px 4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Dropdown isi */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #ffffff;
+  min-width: 140px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  z-index: 10;
+  padding: 8px 0;
+  top: 35px;
+  left: 0;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.25s ease;
+}
+
+/* Tampil saat diklik */
+.dropdown-content.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Arrow rotate effect – ukuran tetap */
+.arrow-icon {
+  transition: transform 0.3s ease;
+  width: 20px;
+  height: 20px;
+  color: var(--primary-text);
+}
+
+.arrow-icon.rotate {
+  transform: rotate(180deg);
+}
+
+.dropdown-content a {
+  color: #000;
+  padding: 10px 16px;
+  text-decoration: none;
+  display: block;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+/* Nonaktifkan hover auto dropdown */
+ /* .dropdown:hover .dropdown-content { display: block; } */
+
+.profile-icon {
+  width: 86px;
+  height: 87px;
+}
+
+@media (max-width: 1200px) {
+  .header-container {
+    padding: 0 20px;
+  }
+  .main-nav ul {
+    gap: 20px;
+  }
+  .main-nav a {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 992px) {
+  .main-nav {
+    display: none;
+  }
+  .header-container {
+    justify-content: space-between;
+  }
+}
+
+/* === ARTICLE CONTENT === */
+.article-container {
+  max-width: 800px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+.article-title {
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 20px;
+  line-height: 1.3;
+  color: var(--primary-text);
+}
+
+.article-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 40px;
+  color: #666;
+  font-size: 14px;
+}
+
+.calendar-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.article-image {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto 40px;
+  display: block;
+  border-radius: 8px;
+}
+
+.article-content {
+  font-size: 16px;
+  line-height: 1.8;
+  text-align: justify;
+  color: var(--primary-text);
+}
+
+.article-content p {
+  margin-bottom: 25px;
+}
+
+.article-content h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 35px 0 20px;
+  color: var(--primary-text);
+}
+
+.article-content ol,
+.article-content ul {
+  margin: 20px 0 25px 0;
+  padding-left: 25px;
+}
+
+.article-content li {
+  margin-bottom: 15px;
+}
+
+.article-content strong {
+  font-weight: 700;
+}
+
+.article-content a {
+  color: #0066cc;
+  text-decoration: underline;
+}
+
+.article-content a:hover {
+  color: #0052a3;
+}
+
+/* Responsive untuk artikel */
+@media (max-width: 768px) {
+  .article-container {
+    margin: 40px auto;
+    padding: 0 15px;
+  }
+
+  .article-title {
+    font-size: 24px;
+  }
+
+  .article-content {
+    font-size: 15px;
+  }
+
+  .article-content h2 {
+    font-size: 18px;
+  }
+}
