@@ -50,11 +50,18 @@ h1, h2, h3, p {
   max-height: 80px;
 }
 
+.header-container > a:first-child {
+  pointer-events: none;
+  cursor: default;
+  display: inline-block;
+}
+
 .header-logo {
   width: 250px;
   max-height: 200px;
   height: auto;
   object-fit: contain;
+  filter: drop-shadow(0px 6px 12px rgba(255, 131, 131, 0.5));
 }
 
 .main-nav ul {
@@ -71,6 +78,28 @@ h1, h2, h3, p {
   letter-spacing: 3.2px;
   color: var(--primary-text);
   text-shadow: 0px 10px 4px rgba(0, 0, 0, 0.25);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.main-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #ff8383, #f5e7e7);
+  transition: width 0.4s ease;
+}
+
+.main-nav a:hover::after {
+  width: 100%;
+}
+
+.main-nav a:hover {
+  color: #ff5252;
+  transform: translateY(-2px);
 }
 
 /* === DROPDOWN MENU (klik + arrow rotate, tanpa ubah size arrow) === */
@@ -88,6 +117,28 @@ h1, h2, h3, p {
   display: flex;
   align-items: center;
   gap: 5px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.dropbtn::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #ff8383, #f5e7e7);
+  transition: width 0.4s ease;
+}
+
+.dropbtn:hover::after {
+  width: 100%;
+}
+
+.dropbtn:hover {
+  color: #ff5252;
+  transform: translateY(-2px);
 }
 
 /* Dropdown isi */
@@ -142,9 +193,30 @@ h1, h2, h3, p {
 /* Nonaktifkan hover auto dropdown */
 /* .dropdown:hover .dropdown-content { display: block; } */
 
+.profile-icon-link {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.profile-icon-link:hover {
+  transform: translateY(-5px) scale(1.1);
+}
+
 .profile-icon {
   width: 86px;
   height: 87px;
+  transition: filter 0.3s ease;
+  cursor: pointer;
+}
+
+.profile-icon-link:hover .profile-icon {
+  filter: drop-shadow(0 6px 12px rgba(255, 131, 131, 0.5));
+  animation: pulse 0.6s ease;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
 }
 
 @media (max-width: 1200px) {
@@ -332,12 +404,37 @@ h1, h2, h3, p {
   margin-top: 30px; 
   width: 376px; 
   height: 320px;
+  transition: all 0.5s ease;
+  cursor: pointer;
+  animation: imageAppear 1s ease;
+  filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.2));
+}
+
+@keyframes imageAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.children-image-wrapper:hover {
+  transform: scale(1.08) translateY(-10px);
+  filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.25));
 }
 
 .children-image {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  transition: transform 0.5s ease;
+}
+
+.children-image-wrapper:hover .children-image {
+  transform: scale(1.05) rotate(-2deg);
 }
 
 .mission-slogan {
@@ -349,6 +446,27 @@ h1, h2, h3, p {
   letter-spacing: 3.2px;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   max-width: 1154px;
+  transition: all 0.4s ease;
+  cursor: pointer;
+  animation: textFadeIn 1.2s ease;
+}
+
+@keyframes textFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mission-slogan:hover {
+  color: #ff5252;
+  transform: scale(1.03);
+  text-shadow: 0px 6px 12px rgba(255, 82, 82, 0.4);
+  letter-spacing: 3.5px;
 }
 
 .mission-image-wrapper { 
@@ -380,7 +498,26 @@ h1, h2, h3, p {
 /* === CONSULTATION === */
 .consultation-section {
   padding: 60px 20px;
-  background-color: var(--background-light); 
+  background-color: var(--background-light);
+  position: relative;
+  overflow: hidden;
+}
+
+.consultation-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(209, 231, 255, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-30px, 30px); }
 }
 
 .consultation-container {
@@ -389,6 +526,8 @@ h1, h2, h3, p {
   align-items: center;
   gap: 40px;
   flex-wrap: nowrap;
+  position: relative;
+  z-index: 1;
 }
 
 .consultation-info-box {
@@ -399,6 +538,44 @@ h1, h2, h3, p {
   padding: 20px 24px;
   width: 380px;
   flex-shrink: 0;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  animation: slideInLeft 0.8s ease;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.consultation-info-box::before {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: all 0.6s ease;
+}
+
+.consultation-info-box:hover::before {
+  top: -50%;
+  left: -50%;
+  transform: rotate(45deg);
+}
+
+.consultation-info-box:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.35);
+  border-color: #a0d0ff;
 }
 
 .consultation-info-box p {
@@ -407,6 +584,8 @@ h1, h2, h3, p {
   line-height: 1.6;
   color: #000;
   margin: 0;
+  position: relative;
+  z-index: 1;
 }
 
 .consultation-image {
@@ -414,6 +593,19 @@ h1, h2, h3, p {
   height: 120px;
   object-fit: contain;
   flex-shrink: 0;
+  transition: all 0.5s ease;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.consultation-image:hover {
+  transform: scale(1.15) rotate(5deg);
+  animation: none;
+  filter: drop-shadow(0 10px 20px rgba(209, 231, 255, 0.8));
 }
 
 .consultation-cta {
@@ -422,12 +614,47 @@ h1, h2, h3, p {
   align-items: flex-start;
   gap: 12px;
   flex-shrink: 0;
+  animation: slideInRight 0.8s ease;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .consultation-cta h3 {
   font-weight: 700;
   font-size: 20px;
   margin: 0;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+}
+
+.consultation-cta h3::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #d1e7ff, #5ba4ff);
+  transition: width 0.4s ease;
+}
+
+.consultation-cta h3:hover::after {
+  width: 100%;
+}
+
+.consultation-cta h3:hover {
+  color: #2e86de;
+  transform: translateX(5px);
 }
 
 .consultation-btn {
@@ -441,6 +668,52 @@ h1, h2, h3, p {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   text-decoration: none;
   color: var(--primary-text);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.consultation-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background-color: rgba(91, 164, 255, 0.4);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+  z-index: 0;
+}
+
+.consultation-btn:hover::before {
+  width: 300%;
+  height: 300%;
+}
+
+.consultation-btn:hover {
+  transform: translateY(-5px) scale(1.08);
+  box-shadow: 0px 10px 20px rgba(46, 134, 222, 0.4);
+  border-color: #5ba4ff;
+  background-color: #b8dcff;
+}
+
+.consultation-btn:active {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0px 6px 12px rgba(46, 134, 222, 0.3);
+}
+
+.consultation-btn span {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.consultation-btn:hover span {
+  transform: scale(1.05);
+  font-weight: 700;
 }
 
 @media (max-width: 992px) {
@@ -482,6 +755,7 @@ h1, h2, h3, p {
   height: 100%;
   background-color: rgba(255, 255, 255, 0.5);
   z-index: 1;
+  transition: background-color 0.3s ease;
 }
 
 .donation-container {
@@ -500,6 +774,18 @@ h1, h2, h3, p {
   color: var(--primary-text);
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   max-width: 894px;
+  animation: fadeInLeft 0.8s ease;
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .donation-text h2, .donation-text p {
@@ -518,6 +804,52 @@ h1, h2, h3, p {
   display: flex;
   align-items: center;
   gap: 30px;
+  transition: all 0.4s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  animation: fadeInRight 0.8s ease;
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.donation-btn-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background-color: rgba(255, 131, 131, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+  z-index: 0;
+}
+
+.donation-btn-wrapper:hover::before {
+  width: 300%;
+  height: 300%;
+}
+
+.donation-btn-wrapper:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0px 12px 20px 0px rgba(0, 0, 0, 0.35);
+  border-color: #ff8383;
+}
+
+.donation-btn-wrapper:active {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.3);
 }
 
 .donation-btn {
@@ -526,11 +858,39 @@ h1, h2, h3, p {
   letter-spacing: 3.2px;
   color: var(--primary-text);
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  position: relative;
+  z-index: 1;
+  transition: color 0.3s ease;
+}
+
+.donation-btn-wrapper:hover .donation-btn {
+  color: #ff5252;
 }
 
 .donation-btn img {
   width: 51px;
   height: 51px;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.4s ease;
+  animation: heartbeat 2s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  10%, 30% {
+    transform: scale(1.1);
+  }
+  20%, 40% {
+    transform: scale(1);
+  }
+}
+
+.donation-btn-wrapper:hover .donation-btn img {
+  transform: scale(1.2) rotate(10deg);
+  animation: none;
 }
 
 @media (max-width: 992px) {
@@ -556,6 +916,7 @@ h1, h2, h3, p {
   background-color: var(--background-light);
   border-top: 1px solid var(--border-dark);
   padding: 40px 20px;
+  position: relative;
 }
 
 .footer-container {
@@ -577,45 +938,106 @@ h1, h2, h3, p {
   text-align: center;
   color: #1f1f1f;
   max-width: 804px;
+  animation: fadeInUp 0.8s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .footer-divider {
   width: 100%;
   max-width: 1149px;
   height: auto;
+  transition: transform 0.3s ease;
 }
 
 .social-links {
   display: flex;
   gap: 12px;
   align-items: center;
+  animation: fadeInUp 1s ease;
+}
+
+.social-links a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  transition: transform 0.3s ease;
+}
+
+.social-links a::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background-color: rgba(255, 131, 131, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease, height 0.4s ease;
+  z-index: -1;
+}
+
+.social-links a:hover::before {
+  width: 150%;
+  height: 150%;
+}
+
+.social-links a:hover {
+  transform: translateY(-5px) scale(1.2);
+}
+
+.social-links a:active {
+  transform: translateY(-2px) scale(1.1);
 }
 
 .social-links a img {
   width: 28px;
   height: 28px;
+  transition: filter 0.3s ease;
+}
+
+.social-links a:hover img {
+  filter: drop-shadow(0 4px 8px rgba(255, 131, 131, 0.5));
+  animation: wiggle 0.5s ease;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-10deg); }
+  75% { transform: rotate(10deg); }
 }
 
 .social-icon-merged {
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 28px;
   height: 28px;
 }
 
-.social-icon-merged img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+.social-icon-merged img:first-child {
+  width: 28px;
+  height: 28px;
 }
 
 .social-icon-merged img:last-child {
-  top: 50%;
-  left: 50%;
+  position: absolute;
   width: 13.5px;
   height: 13.5px;
-  transform: translate(-50%, -50%);
 }
 
 .copyright-text {
@@ -624,4 +1046,5 @@ h1, h2, h3, p {
   line-height: 20px;
   text-align: center;
   color: var(--border-dark);
+  animation: fadeInUp 1.2s ease;
 }

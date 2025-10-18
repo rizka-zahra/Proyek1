@@ -45,11 +45,18 @@ h1, h2, h3, p {
   max-height: 80px;
 }
 
+.header-container > a:first-child {
+  pointer-events: none;
+  cursor: default;
+  display: inline-block;
+}
+
 .header-logo {
   width: 250px;
   max-height: 200px;
   height: auto;
   object-fit: contain;
+  filter: drop-shadow(0px 6px 12px rgba(255, 131, 131, 0.5));
 }
 
 .main-nav ul {
@@ -66,9 +73,31 @@ h1, h2, h3, p {
   letter-spacing: 3.2px;
   color: var(--primary-text);
   text-shadow: 0px 10px 4px rgba(0, 0, 0, 0.25);
+  position: relative;
+  transition: all 0.3s ease;
 }
 
-/* === DROPDOWN MENU (klik + arrow rotate, tanpa ubah size arrow) === */
+.main-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #ff8383, #f5e7e7);
+  transition: width 0.4s ease;
+}
+
+.main-nav a:hover::after {
+  width: 100%;
+}
+
+.main-nav a:hover {
+  color: #ff5252;
+  transform: translateY(-2px);
+}
+
+/* === DROPDOWN MENU === */
 .dropdown {
   position: relative;
   display: inline-block;
@@ -83,9 +112,33 @@ h1, h2, h3, p {
   display: flex;
   align-items: center;
   gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  position: relative;
+  transition: all 0.3s ease;
 }
 
-/* Dropdown isi */
+.dropbtn::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #ff8383, #f5e7e7);
+  transition: width 0.4s ease;
+}
+
+.dropbtn:hover::after {
+  width: 100%;
+}
+
+.dropbtn:hover {
+  color: #ff5252;
+  transform: translateY(-2px);
+}
+
 .dropdown-content {
   display: none;
   position: absolute;
@@ -102,14 +155,12 @@ h1, h2, h3, p {
   transition: all 0.25s ease;
 }
 
-/* Tampil saat diklik */
 .dropdown-content.show {
   display: block;
   opacity: 1;
   transform: translateY(0);
 }
 
-/* Arrow rotate effect – ukuran tetap */
 .arrow-icon {
   transition: transform 0.3s ease;
   width: 20px;
@@ -134,14 +185,62 @@ h1, h2, h3, p {
   background-color: #f1f1f1;
 }
 
-/* Nonaktifkan hover auto dropdown */
- /* .dropdown:hover .dropdown-content { display: block; } */
+.profile-icon-link {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.profile-icon-link:hover {
+  transform: translateY(-5px) scale(1.1);
+}
 
 .profile-icon {
   width: 86px;
   height: 87px;
+  transition: filter 0.3s ease;
+  cursor: pointer;
 }
 
+.profile-icon-link:hover .profile-icon {
+  filter: drop-shadow(0 6px 12px rgba(255, 131, 131, 0.5));
+  animation: pulse 0.6s ease;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* === HAMBURGER MENU === */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+  z-index: 20;
+}
+
+.hamburger span {
+  width: 30px;
+  height: 3px;
+  background-color: var(--primary-text);
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(8px, 8px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* === RESPONSIVE === */
 @media (max-width: 1200px) {
   .header-container {
     padding: 0 20px;
@@ -155,11 +254,82 @@ h1, h2, h3, p {
 }
 
 @media (max-width: 992px) {
+  .hamburger {
+    display: flex;
+  }
+
   .main-nav {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 300px;
+    height: 100vh;
+    background: var(--background-gradient);
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+    transition: right 0.3s ease;
+    z-index: 15;
+    padding-top: 80px;
+  }
+
+  .main-nav.active {
+    right: 0;
+  }
+
+  .main-nav ul {
+    flex-direction: column;
+    gap: 0;
+    padding: 20px;
+  }
+
+  .main-nav li {
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 15px 0;
+  }
+
+  .main-nav a {
+    font-size: 20px;
+    display: block;
+  }
+
+  .main-nav a::after {
     display: none;
   }
+
+  .dropdown-content {
+    position: static;
+    box-shadow: none;
+    background: rgba(255, 255, 255, 0.5);
+    margin-top: 10px;
+    border-radius: 5px;
+  }
+
+  .profile-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .header-logo {
+    width: 180px;
+  }
+}
+
+@media (max-width: 768px) {
   .header-container {
-    justify-content: space-between;
+    padding: 0 15px;
+  }
+
+  .header-logo {
+    width: 150px;
+  }
+
+  .profile-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .main-nav {
+    width: 250px;
   }
 }
 
